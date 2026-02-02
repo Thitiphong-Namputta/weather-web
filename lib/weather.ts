@@ -88,6 +88,30 @@ export async function getForecast(city: string): Promise<ForecastData> {
   return response.json();
 }
 
+export async function getCurrentWeatherByCoords(lat: number, lon: number): Promise<WeatherData> {
+  const response = await fetch(
+    `${BASE_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+  );
+  
+  if (!response.ok) {
+    throw new Error('Failed to fetch weather data');
+  }
+  
+  return response.json();
+}
+
+export async function getForecastByCoords(lat: number, lon: number): Promise<ForecastData> {
+  const response = await fetch(
+    `${BASE_URL}/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+  );
+  
+  if (!response.ok) {
+    throw new Error('Failed to fetch forecast data');
+  }
+  
+  return response.json();
+}
+
 export function getWeatherIconUrl(icon: string): string {
   return `https://openweathermap.org/img/wn/${icon}@2x.png`;
 }
