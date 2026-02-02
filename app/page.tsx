@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { Navbar } from '@/components/navbar';
 import { SearchBar } from '@/components/search-bar';
 import { WeatherCard } from '@/components/weather-card';
@@ -9,6 +10,11 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent } from '@/components/ui/card';
 import { WeatherData, ForecastData, getCurrentWeatherByCoords, getForecastByCoords } from '@/lib/weather';
 import { CloudOff, AlertCircle, MapPin } from 'lucide-react';
+
+const WeatherMap = dynamic(() => import('@/components/weather-map'), {
+  ssr: false,
+  loading: () => <Skeleton className="h-[400px] w-full rounded-lg" />,
+});
 
 export default function Home() {
   const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -151,6 +157,11 @@ export default function Home() {
             <div className="space-y-6">
               <WeatherCard data={weather} />
               <ForecastCard data={forecast} />
+              <WeatherMap 
+                lat={weather.coord?.lat || 0} 
+                lon={weather.coord?.lon || 0} 
+                name={weather.name} 
+              />
             </div>
           )}
 

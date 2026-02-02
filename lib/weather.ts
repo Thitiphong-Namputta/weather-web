@@ -6,6 +6,10 @@ export interface WeatherData {
     sunrise: number;
     sunset: number;
   };
+  coord: {
+    lon: number;
+    lat: number;
+  };
   main: {
     temp: number;
     feels_like: number;
